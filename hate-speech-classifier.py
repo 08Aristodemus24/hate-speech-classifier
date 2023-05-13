@@ -8,7 +8,7 @@ from sklearn.model_selection import train_test_split
 
 import re
 import pandas
-
+       
 
 df = pandas.read_csv('./hate-offensive-speech.csv',  index_col=0)[['class', 'tweet']]
 print(df)
@@ -25,13 +25,13 @@ wordnet = WordNetLemmatizer()
 # <char>.<space>
 # <char>'<char> punctuation
 # <char>*<char> that denote cuss words 
-df['tweet'] = df['tweet'].apply(lambda tweet: re.sub(r"[^a-zA-Z][^(\w+'(*)\w+)]", ' ', tweet))
+df['tweet'] = df['tweet'].apply(lambda tweet: re.sub(r"[^a-zA-Z*][^(\w+'(*)\w+)]", ' ', tweet))
 df['tweet'] = df['tweet'].apply(lambda tweet: re.sub(r"[\s]{2,10}", ' ', tweet))
 print(df['tweet'][0])
 
 # split all words based on spacing and lower all words in each tweet
 df['tweet'] = df['tweet'].apply(lambda tweet: tweet.lower().split(' '))
-print(df['tweet'][0])
+print(df['tweet'][0])    
 print(df['tweet'])
 # final = []
 # for sentence in df['tweet']:
