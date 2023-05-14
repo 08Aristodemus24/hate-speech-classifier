@@ -201,3 +201,7 @@ hate, offensive, or neither
 ## To do:
 need to review how to extract only necessary comment itself that includes offensive language in 
 need to run preprocess scripts of each repository on each of their respective datasets
+- hate-speech-and-offensive-language (in progress)
+- A-Benchmark-Dataset-for-Learning-to-Intervene-in-Online-Hate-Speech
+- ethos_data
+- slur-corpus (next in queue)
