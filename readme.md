@@ -34,8 +34,47 @@ We would also appreciate it if you could fill out this short [form](https://docs
 
 If you have any questions please contact `thomas dot davidson at rutgers  dot edu`.
 
+
+## github repositories:
 - https://github.com/jing-qian/A-Benchmark-Dataset-for-Learning-to-Intervene-in-Online-Hate-Speech/blob/master/README.md
 
 - https://www.kaggle.com/datasets/arkhoshghalb/twitter-sentiment-analysis-hatred-speech
 - https://paperswithcode.com/dataset/ruddit
 
+
+
+## initial data insights:
+**Ethos:**
+dataset contains 565 non hate speech comment and 433 hate speech comments
+of the 433 hate speech comments it is divided into classes violence and non-violent hate speech
+distinct labels of 433 comments include gender, race, national origin, disability, religion, SO
+comment is the feature that contains the hate speech feature
+in binary labeled dataset comment is still the feature that contain the comment
+in binary labeled dataset isHate is the target/real y output value that tells whether a comment is hate speech or not
+
+
+**Breadcrumbs-A-Benchmark-Dataset-for-Learning-to-Intervene-in-Online-Hate-Speech:**
+text feature contains the hate speech comment
+there is no label for the comment of whether it is hate speech or not, because all rows are designated as hate speech
+
+
+**slur-corpus:**
+gold label is the label of whether the comment is hate speech or noy
+body is the feature which contains the comment
+comment label consists of about 5 categories
+
+derogatory 20531
+non derogatory 16729
+homonym 1998
+appropriate 553
+noise 189
+
+
+**hate-speech-and-offensive-language**
+class is the label/target/real y output column
+tweet is the feature which contains offensive comment
+feature columsn hate, offensive, and neither measure to the degree in which a comment is
+hate, offensive, or neither
+
+## To do:
+need to review how to extract only necessary comment itself that includes offensive language in 

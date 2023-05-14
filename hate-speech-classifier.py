@@ -10,7 +10,7 @@ import re
 import pandas
        
 
-df = pandas.read_csv('./hate-offensive-speech.csv',  index_col=0)[['class', 'tweet']]
+df = pandas.read_csv('./data/hate-offensive-speech.csv',  index_col=0)[['class', 'tweet']]
 print(df)
 print(df['tweet'][0])
 ps = PorterStemmer()

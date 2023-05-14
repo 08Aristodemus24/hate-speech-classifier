@@ -1,7 +1,7 @@
-/test-balanced.csv
-/test-unbalanced.csv
-/train-balanced-sarc.csv.gz
-/train-balanced-sarcasm.csv
+/data/test-balanced.csv
+/data/test-unbalanced.csv
+/data/train-balanced-sarc.csv.gz
+/data/train-balanced-sarcasm.csv
 /word_embeddings.txt
 /word_embeddings.wordvectors
 /word_embeddings.wordvectors.vectors.npy
