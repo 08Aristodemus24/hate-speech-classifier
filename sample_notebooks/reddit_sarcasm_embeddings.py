@@ -42,7 +42,7 @@ nltk.download('wordnet')
 # ## Explore dataset
 
 # %%
-df = pd.read_csv('./data/train-balanced-sarcasm.csv')
+df = pd.read_csv('../data/train-balanced-sarcasm.csv')
 df
 
 # %%
