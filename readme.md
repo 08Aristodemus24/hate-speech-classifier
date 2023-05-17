@@ -182,8 +182,8 @@ gold label is the label of whether the comment is hate speech or noy
 body is the feature which contains the comment
 comment label consists of about 5 categories
 
-derogatory 20531
-non derogatory 16729
+DEG derogatory 20531
+NDG non derogatory 16729
 homonym 1998
 appropriate 553
 noise 189
@@ -193,6 +193,10 @@ class is the label/target/real y output column
 tweet is the feature which contains offensive comment
 feature columsn hate, offensive, and neither measure to the degree in which a comment is
 hate, offensive, or neither
+
+0 for hate
+1 for offensive
+2 for neither
 
 
 
@@ -205,3 +209,4 @@ need to run preprocess scripts of each repository on each of their respective da
 - A-Benchmark-Dataset-for-Learning-to-Intervene-in-Online-Hate-Speech
 - ethos_data
 - slur-corpus (next in queue)
+
