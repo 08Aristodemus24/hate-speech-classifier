@@ -210,15 +210,16 @@ hate, offensive, or neither
 ## To do:
 need to review how to extract only necessary comment itself that includes offensive language in 
 need to run preprocess scripts of each repository on each of their respective datasets
-- hate-speech-and-offensive-language (done)
-- hate class currently 0 can be lumped in with derogatory class of slur dataset, so encode to 2
-- offensive class currently 1 can be lumped in with appropriative class of slur dataset, so encode to 0
-- neither class currently 2 can be lumped in with non derogatory of slur dataset, so encode to 4
+- <u>hate-speech-and-offensive-language (done)</u>
+- <u>hate class currently 0 can be lumped in with derogatory class of slur dataset, so encode to 2</u>
+- <u>offensive class currently 1 can be lumped in with appropriative class of slur dataset, so encode to 0</u>
+- <u>neither class currently 2 can be lumped in with non derogatory of slur dataset, so encode to 4</u>
 
 - A-Benchmark-Dataset-for-Learning-to-Intervene-in-Online-Hate-Speech (next)
 
-- ethos_data
+- ethos_data (next in queue)
+- 
 
-- slur-corpus (done)
-- need to encode labels in order
-- probably non derogatory and noise can be just combined so encode noise to 4
+- <u>slur-corpus (done)</u>
+- <u>need to encode labels in order</u>
+- <u>probably non derogatory and noise can be just combined so encode noise to 4</u>
