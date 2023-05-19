@@ -171,37 +171,90 @@ If you have any questions please contact `thomas dot davidson at rutgers  dot ed
 
 ## initial data insights:
 **Ethos:**
-dataset contains 565 non hate speech comment and 433 hate speech comments
-of the 433 hate speech comments it is divided into classes violence and non-violent hate speech
-distinct labels of 433 comments include gender, race, national origin, disability, religion, SO
-comment is the feature that contains the hate speech feature
-in binary labeled dataset comment is still the feature that contain the comment
-in binary labeled dataset isHate is the target/real y output value that tells whether a comment is hate speech or not
+- dataset contains 565 non hate speech comment and 433 hate speech comments
+- of the 433 hate speech comments it is divided into classes violence and non-violent hate speech
+- distinct labels of 433 comments include gender, race, national origin, disability, religion, SO
+- comment is the feature that contains the hate speech feature
+- in binary labeled dataset comment is still the feature that contain the comment
+- in binary labeled dataset isHate is the target/real y output value that tells whether a comment is hate speech or not
+- 1 if hate and 0 if not hate
+
+- only use ff functions
+
+- project uses the hate-speech-and-offensive-language dataset as external dataset
+Loading our Binary Data and the binary external dataset D1: Davidson, Thomas, et al. "Automated hate speech detection and the problem of offensive language." Proceedings of the International AAAI Conference on Web and Social Media. Vol. 11. No. 1. 2017.
+X, y = Preproccesor.load_data(True)
+X_tweets, y_tweets = Preproccesor.load_external_data(True)
+class_names = ['noHateSpeech', 'hateSpeech']
+
+
+- creates the word embeddings as well as trains a neural net with bidirectional lstm archictecture
+max_features = 15000
+max_len = 150
+emb_ma = 1
+embed_size = 150
+
+tk = Tokenizer(lower=True, filters='', num_words=max_features, oov_token=True)
+tk.fit_on_texts(np.concatenate((X, V)))
+tokenized = tk.texts_to_sequences(X)
+x_train = pad_sequences(tokenized, maxlen=max_len)
+tokenized = tk.texts_to_sequences(V)
+x_valid = pad_sequences(tokenized, maxlen=max_len)
+embedding_matrix = create_embedding_matrix(emb_ma, tk, max_features)
+embedding_matrix.shape
+(15001, 300)
+We create our model:
+
+file_path = "final.hdf5"
+check_point = ModelCheckpoint(
+    file_path, monitor="val_loss", verbose=1, save_best_only=True, mode="min")
+early_stop = EarlyStopping(monitor="val_loss", mode="min", patience=50)
+main_input1 = Input(shape=(max_len,), name='main_input1')
+x1 = (Embedding(max_features + 1, 300, input_length=max_len,
+                weights=[embedding_matrix], trainable=False))(main_input1)
+x1 = SpatialDropout1D(0.4)(x1)
+x2 = Bidirectional(LSTM(75, dropout=0.5, return_sequences=True))(x1)
+x = Dropout(0.55)(x2)
+x = Bidirectional(LSTM(50, dropout=0.5, return_sequences=True))(x)
+hidden = concatenate([
+    Attention(max_len)(x1),
+    Attention(max_len)(x2),
+    Attention(max_len)(x)
+])
+hidden = Dense(32, activation='selu')(hidden)
+hidden = Dropout(0.5)(hidden)
+hidden = Dense(16, activation='selu')(hidden)
+hidden = Dropout(0.5)(hidden)
+output_lay1 = Dense(8, activation='sigmoid')(hidden)
+model = Model(inputs=[main_input1], outputs=output_lay1)
+model.compile(loss="binary_crossentropy", optimizer=Adam(),
+              metrics=['binary_accuracy'])
+
 
 **Breadcrumbs-A-Benchmark-Dataset-for-Learning-to-Intervene-in-Online-Hate-Speech:**
-text feature contains the hate speech comment
-there is no label for the comment of whether it is hate speech or not, because all rows are designated as hate speech
+- text feature contains the hate speech comment
+- there is no label for the comment of whether it is hate speech or not, because all rows are designated as hate speech
 
 **slur-corpus:**
-gold label is the label of whether the comment is hate speech or noy
-body is the feature which contains the comment
-comment label consists of about 5 categories
+- gold label is the label of whether the comment is hate speech or noy
+- body is the feature which contains the comment
+- comment label consists of about 5 categories
 
-DEG derogatory 20531
-NDG non derogatory 16729
-HOM homonym 1998
-APR appropriate 553
-CMP noise 189
+- DEG derogatory 20531
+- NDG non derogatory 16729
+- HOM homonym 1998
+- APR appropriate 553
+- CMP noise 189
 
 **hate-speech-and-offensive-language**
-class is the label/target/real y output column
-tweet is the feature which contains offensive comment
-feature columsn hate, offensive, and neither measure to the degree in which a comment is
-hate, offensive, or neither
+- class is the label/target/real y output column
+- tweet is the feature which contains offensive comment
+- feature columsn hate, offensive, and neither measure to the degree in which a comment is
+- hate, offensive, or neither
 
-0 for hate
-1 for offensive
-2 for neither
+- 0 for hate I hope you get type 2 diabetes nigger
+- 1 for offensive your pussy stinks
+- 2 for neither a woman shouldn't complain
 
 
 
