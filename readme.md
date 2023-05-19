@@ -31,6 +31,8 @@ The dataset is licensed under the Creative Commons Attribution-NonCommercial 4.0
 
 - **https://github.com/08Aristodemus24/Ethos-Hate-Speech-Dataset.git**
 
+
+
 # ETHOS Hate Speech Dataset
 ETHOS: multi-labEl haTe speecH detectiOn dataSet. This repository contains a dataset for hate speech detection on social media platforms, called Ethos. There are two variations of the dataset:
 - Ethos_Dataset_Binary.csv[Ethos_Dataset_Binary.csv] contains 998 comments in the dataset alongside with a label about hate speech *presence* or *absence*. 565 of them do not contain hate speech, while the rest of them, 433, contain. 
@@ -68,6 +70,8 @@ Stamatis Karlos | stkarlos@csd.auth.gr
 [GNU GPLv3](https://choosealicense.com/licenses/gpl-3.0/)
 
 - **https://github.com/08Aristodemus24/slur-corpus.git**
+
+
 
 # Towards a Comprehensive Taxonomy and Large-Scale Annotated Corpus for Online Slur Usage
 
@@ -125,9 +129,10 @@ Please cite our paper in any published work that uses this corpus.
 
 - **https://github.com/08Aristodemus24/hate-speech-and-offensive-language.git**
 
+
+
 ### Automated Hate Speech Detection and the Problem of Offensive Language
 Repository for Thomas Davidson, Dana Warmsley, Michael Macy, and Ingmar Weber. 2017. "Automated Hate Speech Detection and the Problem of Offensive Language." ICWSM. You read the paper [here](https://aaai.org/ocs/index.php/ICWSM/ICWSM17/paper/view/15665).
-
 
 ### NOTE: This repository is no longer actively maintained. Please do not post issues regarding the compatibility of the existing code with new versions of Python or the packages used. I will not accept any pull requests. If you plan to use this data or code in your research, please review the [issues](https://github.com/t-davidson/hate-speech-and-offensive-language/issues), as several Github users have suggested changes or improvements to the codebase.
 
@@ -184,9 +189,9 @@ comment label consists of about 5 categories
 
 DEG derogatory 20531
 NDG non derogatory 16729
-homonym 1998
-appropriate 553
-noise 189
+HOM homonym 1998
+APR appropriate 553
+CMP noise 189
 
 **hate-speech-and-offensive-language**
 class is the label/target/real y output column
@@ -205,8 +210,15 @@ hate, offensive, or neither
 ## To do:
 need to review how to extract only necessary comment itself that includes offensive language in 
 need to run preprocess scripts of each repository on each of their respective datasets
-- hate-speech-and-offensive-language (in progress)
-- A-Benchmark-Dataset-for-Learning-to-Intervene-in-Online-Hate-Speech
-- ethos_data
-- slur-corpus (next in queue)
+- hate-speech-and-offensive-language (done)
+- hate class currently 0 can be lumped in with derogatory class of slur dataset, so encode to 2
+- offensive class currently 1 can be lumped in with appropriative class of slur dataset, so encode to 0
+- neither class currently 2 can be lumped in with non derogatory of slur dataset, so encode to 4
 
+- A-Benchmark-Dataset-for-Learning-to-Intervene-in-Online-Hate-Speech (next)
+
+- ethos_data
+
+- slur-corpus (done)
+- need to encode labels in order
+- probably non derogatory and noise can be just combined so encode noise to 4
