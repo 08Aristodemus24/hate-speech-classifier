@@ -263,16 +263,26 @@ model.compile(loss="binary_crossentropy", optimizer=Adam(),
 ## To do:
 need to review how to extract only necessary comment itself that includes offensive language in 
 need to run preprocess scripts of each repository on each of their respective datasets
+**dataset**
 - <u>hate-speech-and-offensive-language (done)</u>
 - <u>hate class currently 0 can be lumped in with derogatory class of slur dataset, so encode to 2</u>
 - <u>offensive class currently 1 can be lumped in with appropriative class of slur dataset, so encode to 0</u>
 - <u>neither class currently 2 can be lumped in with non derogatory of slur dataset, so encode to 4</u>
 
-- A-Benchmark-Dataset-for-Learning-to-Intervene-in-Online-Hate-Speech (next)
+- <u>ethos_data</u>
 
-- ethos_data (next in queue)
-- 
-
-- <u>slur-corpus (done)</u>
+- <u>slur-corpus</u>
 - <u>need to encode labels in order</u>
 - <u>probably non derogatory and noise can be just combined so encode noise to 4</u>
+
+- A-Benchmark-Dataset-for-Learning-to-Intervene-in-Online-Hate-Speech (TBA)
+
+**word embedding model**
+- still need to tune model since words that are supposed to be similar give low cosine similarity scores
+- maybe change parameters of word2vec model like
+
+the effect of min_count and sample on the word corpus. I noticed that these two parameters, and in particular sample, have a great influence over the performance of a model. Displaying both allows for a more accurate and an easier management of their influence.
+
+The threshold for configuring which higher-frequency words are randomly downsampled. Highly influencial. - (0, 1e-5)
+
+negative = int - If > 0, negative sampling will be used, the int for negative specifies how many "noise words" should be drown. If set to 0, no negative sampling is used. - (5, 20)
