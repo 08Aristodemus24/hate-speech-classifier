@@ -62,7 +62,7 @@ def view_words(word_vec: dict, len_to_show=20, word_range=10):
     axis = fig.add_subplot()
 
     # plot the points
-    axis.scatter(emb_red[:, 0], emb_red[:, 1], c=np.random.randn(emb_red.shape[0]), marker='p',alpha=0.5, cmap='magma')
+    axis.scatter(emb_red[:, 0], emb_red[:, 1], c=np.random.randn(emb_red.shape[0]), marker='p',alpha=0.75, cmap='magma')
 
     # annotate the points
     for iter, (word, coord) in enumerate(word_vec_red.items()):
