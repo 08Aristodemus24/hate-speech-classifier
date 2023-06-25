@@ -277,6 +277,17 @@ need to run preprocess scripts of each repository on each of their respective da
 
 - A-Benchmark-Dataset-for-Learning-to-Intervene-in-Online-Hate-Speech (TBA)
 
+**exploratory data analysis**
+Here we investigate the problem of hate speech and ask the following questions which we will eventually answer to help lessen or even outright solve the problem of hate speech
+- What would be the statistical treatment used in words?
+- What slurs are usually used in hate speech?
+- What defines a slur?
+- What is the percentage of the most usual slurs?
+- What are the most unusual slurs?
+- What is the percentage of these unusual slurs?
+- Once this is done highlight the classification problem
+
+
 **word embedding model**
 - still need to tune model since words that are supposed to be similar give low cosine similarity scores
 - maybe change parameters of word2vec model like
@@ -286,3 +297,5 @@ the effect of min_count and sample on the word corpus. I noticed that these two 
 The threshold for configuring which higher-frequency words are randomly downsampled. Highly influencial. - (0, 1e-5)
 
 negative = int - If > 0, negative sampling will be used, the int for negative specifies how many "noise words" should be drown. If set to 0, no negative sampling is used. - (5, 20)
+
+**sentiment classifier model**
