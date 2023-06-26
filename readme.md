@@ -280,7 +280,10 @@ need to run preprocess scripts of each repository on each of their respective da
 **exploratory data analysis**
 Here we investigate the problem of hate speech and ask the following questions which we will eventually answer to help lessen or even outright solve the problem of hate speech
 - What would be the statistical treatment used in words?
-- What slurs are usually used in hate speech?
+- what words are most frequently attributed in derogatory comments? Isolate the comments with derogatory label and get each unique word count
+- what words are most frequently attributed in offensive comments? Isolate the comments with derogatory label and get each unique word count
+- what words are most frequently attributed in non-derogatory comments? Isolate the comments with derogatory label and get each unique word count
+
 - What defines a slur?
 - What is the percentage of the most usual slurs?
 - What are the most unusual slurs?
