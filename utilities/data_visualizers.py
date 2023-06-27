@@ -1,6 +1,8 @@
 import numpy as np
 
 import matplotlib.pyplot as plt
+import matplotlib.cm as cm
+import matplotlib as mpl
 import seaborn as sb
 
 from sklearn.decomposition import PCA
@@ -74,13 +76,29 @@ def view_words(word_vec: dict, len_to_show=20, word_range=10):
     axis.set_title('t-SNE reduced word embeddings')
     plt.show()
 
-def view_word_frequency(word_counts, label: str, limit: int=6):
-    axis = word_counts[:limit].sort_values(ascending=True).plot(kind='barh', color=plt.get_cmap('magma'))
-    axis.set_xlabel('frequency')
-    axis.set_ylabel('words')
-    axis.set_title('word frequency graph')
-    plt.show()
+def view_word_frequency(word_counts, colormap:str, label: str, kind: str='barh', limit: int=6):
+    data = word_counts[:limit].sort_values(ascending=True)
+    cmap = cm.get_cmap(colormap)
+    _, axis = plt.subplots()
+    
+    if kind == 'barh':        
+        axis.barh(data.index, data.values, color=cmap(np.linspace(0, 1, len(data))))
 
+        # axis = word_counts[:limit].sort_values(ascending=True).plot(kind='barh', colormap='viridis')
+
+        axis.set_xlabel('frequency')
+        axis.set_ylabel('words')
+        axis.set_title('word frequency graph')
+        plt.show()
+    elif kind == 'pie':
+        axis.pie(data, labels=data.index, autopct='%.2f%%', colors=cmap(np.linspace(0, 1, len(data))))
+        axis.axis('equal')
+        plt.show()
+
+
+
+    
+    
         
 
         
