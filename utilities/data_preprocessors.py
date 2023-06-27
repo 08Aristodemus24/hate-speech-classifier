@@ -4,6 +4,8 @@ from nltk.stem.snowball import SnowballStemmer
 from nltk.stem import WordNetLemmatizer
 from nltk.corpus import stopwords
 
+import numpy as np
+
 import ast
 import pandas as pd
 
@@ -270,21 +272,22 @@ def re_encode_ethos_targets(label):
 
 def read_preprocess(df):
     """preprocess data
-    by splitting columsn to X, and Y vlaues
+    by converting string to list or series
     """
-
-    # extract diagnosis as Y
-    Y = df['label']
-
-    # transform Y to 2-dim 1 x m matrix
-    Y = Y.to_numpy().reshape(Y.shape[0], -1)
 
     # saving df to csv does not preserve a series type and is 
     # converted to str so convert first str to list or series
-    X = df['comment'].apply(lambda comment: ast.literal_eval(comment))
+    df['comment'] = df['comment'].apply(lambda comment: ast.literal_eval(comment))
 
-    # return as split Xs and Ys
-    return X, Y
+    return df
+
+
+def series_to_1D_array(series):
+    """this converts the series or column of a df
+    of lists 
+    """
+
+    return [item for sublist in series for item in sublist]
 
 
 

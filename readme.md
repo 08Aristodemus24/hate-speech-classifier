@@ -289,7 +289,8 @@ Here we investigate the problem of hate speech and ask the following questions w
 - What are the most unusual slurs?
 - What is the percentage of these unusual slurs?
 - Once this is done highlight the classification problem
-
+- use colormap to visualize word frequency bar chart
+- what is the percentages of each first 10 words in each class. use pie chart
 
 **word embedding model**
 - still need to tune model since words that are supposed to be similar give low cosine similarity scores

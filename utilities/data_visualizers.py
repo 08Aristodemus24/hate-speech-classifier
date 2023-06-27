@@ -74,6 +74,13 @@ def view_words(word_vec: dict, len_to_show=20, word_range=10):
     axis.set_title('t-SNE reduced word embeddings')
     plt.show()
 
+def view_word_frequency(word_counts, label: str, limit: int=6):
+    axis = word_counts[:limit].sort_values(ascending=True).plot(kind='barh', color=plt.get_cmap('magma'))
+    axis.set_xlabel('frequency')
+    axis.set_ylabel('words')
+    axis.set_title('word frequency graph')
+    plt.show()
+
         
 
         
