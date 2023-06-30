@@ -77,6 +77,7 @@ def view_words(word_vec: dict, len_to_show=20, word_range=10):
     plt.show()
 
 def view_word_frequency(word_counts, colormap:str, label: str, kind: str='barh', limit: int=6):
+    # get either last few words or first feww words
     data = word_counts[:limit].sort_values(ascending=True)
     cmap = cm.get_cmap(colormap)
     _, axis = plt.subplots()

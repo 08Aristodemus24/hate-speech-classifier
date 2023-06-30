@@ -4,11 +4,13 @@
 * **https://medium.com/towards-data-science/pre-trained-word-embedding-for-text-classification-end2end-approach-5fbf5cd8aead**
 but this the pre-trained word embeddings still may not contain some words in your dataset and this article only uses it and not fine tunes the embeddings to learn new words
 
-* https://czarrar.github.io/Gensim-Word2Vec/
+* **https://czarrar.github.io/Gensim-Word2Vec/**
 this is for fine tuning word embeddigns in a simple way using gensim
 
-* **https://github.com/jing-qian/A-Benchmark-Dataset-for-Learning-to-Intervene-in-Online-Hate-Speech/blob/master/README.md**
+* **https://medium.com/@ncaldwellgatsos/should-you-try-and-train-domain-specific-embeddings-3ef29cd7bb3a**
+this is for training a new word embedding matrix for new words
 
+* **https://github.com/jing-qian/A-Benchmark-Dataset-for-Learning-to-Intervene-in-Online-Hate-Speech/blob/master/README.md**
 # A Benchmark Dataset for Learning to Intervene in Online Hate Speech
 
 In order to encourage strategies of countering online hate speech, we introduce a novel task of generative hate speech intervention along with two fully-labeled datasets collected from Gab and Reddit. Distinct from existing hate speech datasets, our datasets retain their conversational context and introduce human-written intervention responses. Due to our data collecting strategy, all the posts in our datasets are manually labeled as hate or non-hate speech by Mechanical Turk workers, so they can also be used for the hate speech detection task.
