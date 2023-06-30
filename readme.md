@@ -1,6 +1,9 @@
 # **STILL IN PRODUCTION** 
 
 ## references and citations:
+* http://vectors.nlpl.eu/repository/
+a repository of pre-trained word embeddings
+
 * **https://medium.com/towards-data-science/pre-trained-word-embedding-for-text-classification-end2end-approach-5fbf5cd8aead**
 but this the pre-trained word embeddings still may not contain some words in your dataset and this article only uses it and not fine tunes the embeddings to learn new words
 
@@ -240,34 +243,23 @@ need to run preprocess scripts of each repository on each of their respective da
 
 **exploratory data analysis**
 Here we investigate the problem of hate speech and ask the following questions which we will eventually answer to help lessen or even outright solve the problem of hate speech
-- What defines a slur?
-- What would be the statistical treatment used in words?
-- what words are most frequently attributed in derogatory comments? Isolate the comments with derogatory label and get each unique word count
-- what are the percentages of thsee frequent derogatory comments?
-- what words are most frequently attributed in offensive comments? Isolate the comments with derogatory label and get each unique word count
-- what are the percentages of thsee frequent offensive comments?
-- what words are most frequently attributed in non-derogatory comments? Isolate the comments with derogatory label and get each unique word count
-- what are the percentages of thsee frequent non-derogatory comments?
-- what are 
+- <u>what words are most frequently attributed in derogatory comments? Isolate the comments with derogatory label and get each unique word count</u>
+- <u>what are the percentages of thsee frequent derogatory comments?</u>
+- <u>what words are most frequently attributed in offensive comments? Isolate the comments with derogatory label and get each unique word count</u>
+- <u>what are the percentages of thsee frequent offensive comments?</u>
+- <u>what words are most frequently attributed in non-derogatory comments? Isolate the comments with derogatory label and get each unique word count</u>
+- <u>what are the percentages of thsee frequent non-derogatory comments?</u>
 
-- What are the most unusual slurs?
-- What is the percentage of these unusual slurs?
+- What are the most unusual derogatory comments?
+- What is the percentage of these unusual derogatory comments?
 
-- Once this is done highlight the classification problem
+- once this is done highlight the classification problem
 - <u>use colormap to visualize first 20 words frequencies in bar chart</u>
 - <u>what is the percentages of each first 20 words in each class. use pie chart</u>
 
-**word embedding model**
-- still need to tune model since words that are supposed to be similar give low cosine similarity scores
-- maybe change parameters of word2vec model like
-
-the effect of min_count and sample on the word corpus. I noticed that these two parameters, and in particular sample, have a great influence over the performance of a model. Displaying both allows for a more accurate and an easier management of their influence.
-
-The threshold for configuring which higher-frequency words are randomly downsampled. Highly influencial. - (0, 1e-5)
-
-negative = int - If > 0, negative sampling will be used, the int for negative specifies how many "noise words" should be drown. If set to 0, no negative sampling is used. - (5, 20)
 
 **sentiment classifier model**
+- implement a counter to count how many words in our hate-speech-dataset does not exist in our pre-trained glove word embeddings (from stanford)
 
 
 
