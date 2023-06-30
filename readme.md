@@ -1,7 +1,13 @@
 # **STILL IN PRODUCTION** 
 
 ## references and citations:
-- **https://github.com/jing-qian/A-Benchmark-Dataset-for-Learning-to-Intervene-in-Online-Hate-Speech/blob/master/README.md**
+* **https://medium.com/towards-data-science/pre-trained-word-embedding-for-text-classification-end2end-approach-5fbf5cd8aead**
+but this the pre-trained word embeddings still may not contain some words in your dataset and this article only uses it and not fine tunes the embeddings to learn new words
+
+* https://czarrar.github.io/Gensim-Word2Vec/
+this is for fine tuning word embeddigns in a simple way using gensim
+
+* **https://github.com/jing-qian/A-Benchmark-Dataset-for-Learning-to-Intervene-in-Online-Hate-Speech/blob/master/README.md**
 
 # A Benchmark Dataset for Learning to Intervene in Online Hate Speech
 
@@ -29,7 +35,7 @@ Other meta data of the Gab post can be retrieved from the dataset https://files.
 The dataset is licensed under the Creative Commons Attribution-NonCommercial 4.0 International Public License. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc/4.0/ or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA. 
 
 
-- **https://github.com/08Aristodemus24/Ethos-Hate-Speech-Dataset.git**
+* **https://github.com/08Aristodemus24/Ethos-Hate-Speech-Dataset.git**
 
 
 
@@ -69,7 +75,7 @@ Stamatis Karlos | stkarlos@csd.auth.gr
 ## License
 [GNU GPLv3](https://choosealicense.com/licenses/gpl-3.0/)
 
-- **https://github.com/08Aristodemus24/slur-corpus.git**
+* **https://github.com/08Aristodemus24/slur-corpus.git**
 
 
 
@@ -127,7 +133,7 @@ Please cite our paper in any published work that uses this corpus.
 }
 ```
 
-- **https://github.com/08Aristodemus24/hate-speech-and-offensive-language.git**
+* **https://github.com/08Aristodemus24/hate-speech-and-offensive-language.git**
 
 
 
@@ -260,3 +266,7 @@ The threshold for configuring which higher-frequency words are randomly downsamp
 negative = int - If > 0, negative sampling will be used, the int for negative specifies how many "noise words" should be drown. If set to 0, no negative sampling is used. - (5, 20)
 
 **sentiment classifier model**
+
+
+
+
