@@ -4,10 +4,13 @@ from nltk.stem.snowball import SnowballStemmer
 from nltk.stem import WordNetLemmatizer
 from nltk.corpus import stopwords
 
+from sklearn.feature_extraction.text import CountVectorizer
+
 import numpy as np
 
 import ast
 import pandas as pd
+import tqdm
 
 # for ethos dataset
 def my_clean(text, stops=False, stemming=False):
@@ -282,6 +285,7 @@ def read_preprocess(df):
     return df
 
 
+
 def series_to_1D_array(series):
     """this converts the series or column of a df
     of lists 
@@ -291,3 +295,98 @@ def series_to_1D_array(series):
 
 
 
+def construct_embedding_matrix(word_emb_path, word_index, EMB_VEC_LEN):
+    embedding_dict = {}
+    with open(word_emb_path, 'r') as f:
+        for line in f:
+            # each line consists of: <word> <feature 1> <feature 2> ... <feature d>
+            # where d is the 300th feature of the word embedding of that word
+            values = line.split()
+
+            # get the word
+            word = values[0]
+
+            # if such word exists in our tokenized dictionary
+            # then if the reverse is the case that means that 
+            # that word exists in the 1.9m word vocab of glove
+            if word in word_index.keys():
+                # get the vector
+                vector = np.asarray(values[1:], 'float32')
+
+                # build the key and value pair of this word and its vector representation
+                embedding_dict[word] = vector
+
+    # oov words (out of vacabulary words) will be mapped to 0 vectors
+    # this is why we have a plus one always to the number of our words in 
+    # our embedding matrix since that is reserved for an unknown or OOV word
+    num_words = len(word_index) + 1
+
+    # initialize it to 0
+    embedding_matrix=np.zeros((num_words, EMB_VEC_LEN))
+
+    for word, index in tqdm.tqdm(word_index.items()):
+        # skip if, if index is already equal to the number of
+        # words in our vocab. A break statement if you will
+        if index < num_words:
+            # if word does not exist in the pretrained word embedding itself
+            # then return an empty array
+            vect = embedding_dict.get(word, [])
+
+            # if in cases vect is indeed otherwise an empty array due 
+            # to the word existing in the pretrained word embeddings
+            # then place it in our embedding matrix. Otherwise its index
+            # where a word does not exist will stay a row of zeros
+            if len(vect) > 0:
+                embedding_matrix[index] = vect[:EMB_VEC_LEN]
+
+    return embedding_matrix
+
+
+
+def rejoin_data(df_2):
+    """
+    Getting important variables:
+    * get the list in the dataframe with the greatest amount of words or 
+    with the longest sequence, this will be used later for generating
+      the embeddings
+
+    * reassign again the df but this time instead of lists of words in the
+    comment column join them, this will be again used later for generating 
+    the indexed reprsetnations of the sequences of words 
+
+    * before joining again get array in df with longest length first
+    """
+
+    df_2['comment'] = df_2['comment'].apply(lambda comment: " ".join(comment))
+    sample = df_2.loc[0, 'comment']
+    print(f'{sample}')
+
+    return df_2
+
+
+
+def build_co_occ_matrix(oov_vocab, document):
+    """
+    Building the co-occurence matrix:
+    * this will build teh co-occurence matrix for all the words not occuring
+    in the already pre-trained word and word embedding dictionary available online
+    """
+
+    # this will convert the collection of text documents 
+    # or sentences to a matrix of token/word counts
+    cv = CountVectorizer(ngram_range=(1, 1), vocabulary=oov_vocab)
+
+    # this will create the matrix of token counts
+    X = cv.fit_transform(document)
+
+    # matrix multiply X's transpose to X
+    Xc = X.T * X
+
+    # set the diagonals to be zeroes as it's pointless to be 1
+    Xc.setdiag(0)
+
+    # finally convert Xc to an array once self.setdiag is called
+    # this will be our co-occurence matrix to be fed to Mittens
+    co_occ_matrix = Xc.toarray()
+    
+    return co_occ_matrix

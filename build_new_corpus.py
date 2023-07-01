@@ -3,82 +3,8 @@ import numpy as np
 
 from sklearn.feature_extraction.text import CountVectorizer
 
-from utilities.data_loaders import glove2dict
-from utilities.data_preprocessors import read_preprocess, series_to_1D_array
-
-
-
-def view_and_load_data(data_path):
-    """
-    Load the data:
-    * after loadign the data see also the number of all unique words in the dataframe
-
-    * see all the words that occur without using the constraint of the words having to be unique
-
-    * see the unique words themselves
-    """
-
-    df_1 = pd.read_csv(data_path, index_col=0)
-    df_1 = read_preprocess(df_1)
-
-    all_words = pd.Series(series_to_1D_array(df_1['comment']))
-    all_unique_words_counts = all_words.value_counts()
-    all_unique_words = all_words.unique()
-
-    print(f'length of all words: {len(all_words)}\n')
-    print(f'length of all unique words: {len(all_unique_words)}\n')
-    print(f'all unique words: \n{all_unique_words}\n')
-    print(f'frequency of all unique words: \n{all_unique_words_counts}\n')
-
-    return df_1, all_words, all_unique_words, all_unique_words_counts
-
-
-def rejoin_data(df_2):
-    """
-    Getting important variables:
-    * get the list in the dataframe with the greatest amount of words or 
-    with the longest sequence, this will be used later for generating
-      the embeddings
-
-    * reassign again the df but this time instead of lists of words in the
-    comment column join them, this will be again used later for generating 
-    the indexed reprsetnations of the sequences of words 
-
-    * before joining again get array in df with longest length first
-    """
-
-    df_2['comment'] = df_2['comment'].apply(lambda comment: " ".join(comment))
-    sample = df_2.loc[0, 'comment']
-    print(f'{sample}')
-
-    return df_2
-
-
-def build_co_occ_matrix(oov_vocab, document):
-    """
-    Building the co-occurence matrix:
-    * this will build teh co-occurence matrix for all the words not occuring
-    in the already pre-trained word and word embedding dictionary available online
-    """
-
-    # this will convert the collection of text documents 
-    # or sentences to a matrix of token/word counts
-    cv = CountVectorizer(ngram_range=(1, 1), vocabulary=oov_vocab)
-
-    # this will create the matrix of token counts
-    X = cv.fit_transform(document)
-
-    # matrix multiply X's transpose to X
-    Xc = X.T * X
-
-    # set the diagonals to be zeroes as it's pointless to be 1
-    Xc.setdiag(0)
-
-    # finally convert Xc to an array once self.setdiag is called
-    # this will be our co-occurence matrix to be fed to Mittens
-    co_occ_matrix = Xc.toarray()
-    
-    return co_occ_matrix
+from utilities.data_loaders import glove2dict, view_and_load_data
+from utilities.data_preprocessors import rejoin_data, build_co_occ_matrix
 
 
 # This script aims to augment the already existing pre-trained

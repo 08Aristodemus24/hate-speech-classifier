@@ -1,8 +1,11 @@
 import pandas as pd
 import numpy as np
-from utilities.data_preprocessors import my_clean
-import tqdm
 import csv
+from io import StringIO
+
+from utilities.data_preprocessors import my_clean, read_preprocess, series_to_1D_array
+
+
 
 def load_data(path='', dataset='hate-offensive-speech'):
 
@@ -75,56 +78,57 @@ def load_multi_label_data(preprocessed=True, stemming_a=True):
     return np.array(X), np.array(yT), np.array(y)
 
 
-def construct_embedding_matrix(word_emb_path, word_index, EMB_VEC_LEN):
-    embedding_dict = {}
-    with open(word_emb_path, 'r') as f:
-        for line in f:
-            # each line consists of: <word> <feature 1> <feature 2> ... <feature d>
-            # where d is the 300th feature of the word embedding of that word
-            values = line.split()
-
-            # get the word
-            word = values[0]
-
-            # if such word exists in our tokenized dictionary
-            # then if the reverse is the case that means that 
-            # that word exists in the 1.9m word vocab of glove
-            if word in word_index.keys():
-                # get the vector
-                vector = np.asarray(values[1:], 'float32')
-
-                # build the key and value pair of this word and its vector representation
-                embedding_dict[word] = vector
-
-    # oov words (out of vacabulary words) will be mapped to 0 vectors
-    # this is why we have a plus one always to the number of our words in 
-    # our embedding matrix since that is reserved for an unknown or OOV word
-    num_words = len(word_index) + 1
-
-    # initialize it to 0
-    embedding_matrix=np.zeros((num_words, EMB_VEC_LEN))
-
-    for word, index in tqdm.tqdm(word_index.items()):
-        # skip if, if index is already equal to the number of
-        # words in our vocab. A break statement if you will
-        if index < num_words:
-            # if word does not exist in the pretrained word embedding itself
-            # then return an empty array
-            vect = embedding_dict.get(word, [])
-
-            # if in cases vect is indeed otherwise an empty array due 
-            # to the word existing in the pretrained word embeddings
-            # then place it in our embedding matrix. Otherwise its index
-            # where a word does not exist will stay a row of zeros
-            if len(vect) > 0:
-                embedding_matrix[index] = vect[:EMB_VEC_LEN]
-
-    return embedding_matrix
-
 
 def glove2dict(glove_filename):
+    """
+    loads the pre-trained word embeddings by GloVe
+    """
+
     with open(glove_filename, encoding='utf-8') as file:
         reader = csv.reader(file, delimiter=' ', quoting=csv.QUOTE_NONE)
         embed = {line[0]: np.array(list(map(float, line[1:])))
                 for line in reader}
     return embed
+
+
+
+def load_co_occ_matrix(path):
+    """
+    loads the co-occurence matrix built by build_new_corpus.py
+    """
+    with open(path) as file:
+        matrix = file.read()
+        matrix = StringIO(matrix)
+        
+        file.close()
+
+        final = np.loadtxt(matrix).astype(np.int64)
+    
+
+    return final
+
+
+
+def view_and_load_data(data_path):
+    """
+    Load the data:
+    * after loadign the data see also the number of all unique words in the dataframe
+
+    * see all the words that occur without using the constraint of the words having to be unique
+
+    * see the unique words themselves
+    """
+
+    df_1 = pd.read_csv(data_path, index_col=0)
+    df_1 = read_preprocess(df_1)
+
+    all_words = pd.Series(series_to_1D_array(df_1['comment']))
+    all_unique_words_counts = all_words.value_counts()
+    all_unique_words = all_words.unique()
+
+    print(f'length of all words: {len(all_words)}\n')
+    print(f'length of all unique words: {len(all_unique_words)}\n')
+    print(f'all unique words: \n{all_unique_words}\n')
+    print(f'frequency of all unique words: \n{all_unique_words_counts}\n')
+
+    return df_1, all_words, all_unique_words, all_unique_words_counts
