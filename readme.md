@@ -1,5 +1,5 @@
 # **STILL IN PRODUCTION** 
-
+updated read me in new drive
 ## references and citations:
 * **http://vectors.nlpl.eu/repository/**
 a repository of pre-trained word embeddings
