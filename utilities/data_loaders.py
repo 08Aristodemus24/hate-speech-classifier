@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 from utilities.data_preprocessors import my_clean
 import tqdm
+import csv
 
 def load_data(path='', dataset='hate-offensive-speech'):
 
@@ -121,3 +122,9 @@ def construct_embedding_matrix(word_emb_path, word_index, EMB_VEC_LEN):
     return embedding_matrix
 
 
+def glove2dict(glove_filename):
+    with open(glove_filename, encoding='utf-8') as file:
+        reader = csv.reader(file, delimiter=' ', quoting=csv.QUOTE_NONE)
+        embed = {line[0]: np.array(list(map(float, line[1:])))
+                for line in reader}
+    return embed
