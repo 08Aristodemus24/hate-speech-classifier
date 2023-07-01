@@ -1,14 +1,21 @@
 # **STILL IN PRODUCTION** 
 
 ## references and citations:
-* http://vectors.nlpl.eu/repository/
+* **http://vectors.nlpl.eu/repository/**
 a repository of pre-trained word embeddings
 
 * **https://medium.com/towards-data-science/pre-trained-word-embedding-for-text-classification-end2end-approach-5fbf5cd8aead**
 but this the pre-trained word embeddings still may not contain some words in your dataset and this article only uses it and not fine tunes the embeddings to learn new words
 
 * **https://czarrar.github.io/Gensim-Word2Vec/**
-this is for fine tuning word embeddigns in a simple way using gensim
+* **https://towardsdatascience.com/fine-tune-glove-embeddings-using-mittens-89b5f3fe4c39**
+- returns the dictionary of all the words as keys and its respective vector representations as values
+
+* **https://stackoverflow.com/questions/40345607/how-does-fine-tuning-word-embeddings-work**
+* **https://czarrar.github.io/Gensim-Word2Vec/**
+* **https://github.com/ashutoshsingh0223/mittens**
+* **https://rohit-agrawal.medium.com/using-fine-tuned-gensim-word2vec-embeddings-with-torchtext-and-pytorch-17eea2883cd**
+this is for fine tuning word embeddigns in a simple way using gensim, mittens using the GloVe or Word2Vec word embeddings
 
 * **https://medium.com/@ncaldwellgatsos/should-you-try-and-train-domain-specific-embeddings-3ef29cd7bb3a**
 this is for training a new word embedding matrix for new words
