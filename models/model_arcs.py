@@ -1,7 +1,7 @@
 import tensorflow as tf
 from tensorflow.keras.regularizers import L2
-from tensorflow.keras.layers import Dense, Dropout, LSTM
-from tensorflow.keras import Sequential
+from tensorflow.keras.layers import Dense, Dropout, LSTM, Activation, Embedding
+from tensorflow.keras import Model, Input
 from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.losses import CategoricalCrossentropy as cce_loss
 from tensorflow.keras.metrics import CategoricalAccuracy, CategoricalCrossentropy as cce_metric
@@ -11,18 +11,43 @@ from tensorflow.keras.optimizers import Adam
 import json
 
 
+def init_embedding_layer(vocab_len, emb_matrix):
+    emb_dim = emb_matrix.shape[1]
+    embedding_layer = Embedding(vocab_len, emb_dim, trainable=False)
+    embedding_layer.build((None,))
+    embedding_layer.set_weights([emb_matrix])
 
-def baseline_model():
+    return embedding_layer
 
-    model = Sequential()
-    model.add(LSTM(64))
-    model.add(Dropout(0.1))
-    model.add(Dense(3, activation='linear'))
+
+def load_lstm_model(input_shape: tuple, vocab_len, emb_matrix):
+    """
+    Define architecture of LSTM model then return for later training
+
+    Takes in also the embedding layer with weights/coefficients set
+    to the pre-trained GloVe embeddings
+    """
+
+    seqs_padded = Input(shape=input_shape, dtype='int64')
+    embeddings = init_embedding_layer(vocab_len, emb_matrix)
+    A1 = LSTM(units=128, return_sequences=True)(embeddings)
+    D1 = Dropout(0.2)(A1)
+    A2 = LSTM(units=128, return_sequences=False)(D1)
+    D2 = Dropout(0.2)(A2)
+    Z3 = Dense(units=5)(D2)
+    A3 = Activation('softmax')(Z3)
+
+    model = Model(inputs=seqs_padded, outputs=A3)
 
     model.compile(
-        loss=cce_loss(from_logits=True),
+        loss=cce_loss(),
         optimizer=Adam(learning_rate=0.001),
-        metrics=[cce_metric(from_logits=True), CategoricalAccuracy()]
+        metrics=[cce_metric(), CategoricalAccuracy()]
     )
 
     return model
+
+
+
+def load_softmax_model():
+    pass
