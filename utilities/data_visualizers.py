@@ -11,9 +11,11 @@ from sklearn.manifold import TSNE
 import itertools
 
 
+
 def view_sentence(sentences, phase='', limit=5):
     for sentence in sentences.iloc[:limit]:
         print(f'{phase}phase:\n{sentence}\n')
+
 
 
 def view_words(word_vec: dict, len_to_show=20, word_range=10):
@@ -76,6 +78,8 @@ def view_words(word_vec: dict, len_to_show=20, word_range=10):
     axis.set_title('t-SNE reduced word embeddings')
     plt.show()
 
+
+
 def view_word_frequency(word_counts, colormap:str, label: str, kind: str='barh', limit: int=6):
     # get either last few words or first feww words
     data = word_counts[:limit].sort_values(ascending=True)
@@ -95,12 +99,38 @@ def view_word_frequency(word_counts, colormap:str, label: str, kind: str='barh',
         axis.pie(data, labels=data.index, autopct='%.2f%%', colors=cmap(np.linspace(0, 1, len(data))))
         axis.axis('equal')
         plt.show()
-
-
+    
 
     
+def train_cross_results_v2(results: dict, epochs: int, img_title: str='figure'):
+    # # use matplotlib backend
+    # mpl.use('Agg')
+
+    figure = plt.figure(figsize=(15, 10))
+    axis = figure.add_subplot()
+
+    styles = [('p:', '#5d42f5'), ('h-', '#fc03a5'), ('o:', '#1e8beb'), ('x--','#1eeb8f'), ('+--', '#0eb802'), ('8-', '#f55600')]
+
+    for index, (key, value) in enumerate(results.items()):
+        axis.plot(np.arange(epochs + 1), value, styles[index][0] ,color=styles[index][1], alpha=0.5, label=key)
+
+    axis.set_ylabel('metric value')
+    axis.set_xlabel('epochs')
+    axis.legend()
+
+    plt.savefig(f'./figures & images/{img_title}.png')
+    plt.show()
     
-        
+
+    # delete figure
+    del figure
+
+
+
+def view_final_metrics(results: dict, label: str):
+    print(f'\n{label}:')
+    for key, item in results.items():
+        print(f'{key}: {item[-1]}')
 
         
 

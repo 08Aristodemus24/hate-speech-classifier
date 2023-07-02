@@ -20,24 +20,25 @@ def init_embedding_layer(vocab_len, emb_matrix):
     return embedding_layer
 
 
-def load_lstm_model(input_shape: tuple, vocab_len, emb_matrix):
+def load_lstm_model(input_shape, vocab_len, emb_matrix):
     """
     Define architecture of LSTM model then return for later training
 
     Takes in also the embedding layer with weights/coefficients set
     to the pre-trained GloVe embeddings
     """
+    print(f'input shape: {input_shape}')
 
-    seqs_padded = Input(shape=input_shape, dtype='int64')
-    embeddings = init_embedding_layer(vocab_len, emb_matrix)
+    seqs_padded = Input(shape=(input_shape, ), dtype='int64')
+    embeddings = init_embedding_layer(vocab_len, emb_matrix)(seqs_padded)
     A1 = LSTM(units=128, return_sequences=True)(embeddings)
     D1 = Dropout(0.2)(A1)
     A2 = LSTM(units=128, return_sequences=False)(D1)
     D2 = Dropout(0.2)(A2)
-    Z3 = Dense(units=5)(D2)
+    Z3 = Dense(units=4)(D2)
     A3 = Activation('softmax')(Z3)
 
-    model = Model(inputs=seqs_padded, outputs=A3)
+    model = Model(inputs=seqs_padded, outputs=A3, name='hate-speech-lstm')
 
     model.compile(
         loss=cce_loss(),

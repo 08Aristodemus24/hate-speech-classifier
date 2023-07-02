@@ -304,7 +304,7 @@ def construct_embedding_dict(word_emb_path, word_to_index):
 
     embedding_dict = {}
     with open(word_emb_path, 'r') as file:
-        for line, index in enumerate(file):
+        for index, line in enumerate(file):
             # each line consists of: <word> <feature 1> <feature 2> ... <feature d>
             # where d is the 300th feature of the word embedding of that word
             values = line.split()
@@ -321,9 +321,9 @@ def construct_embedding_dict(word_emb_path, word_to_index):
                 
                 # build the key and value pair of this word and its vector representation
                 embedding_dict[word] = vector
-
-                if index == 0:
-                    EMB_VEC_LEN = vector.shape[0]
+                
+                # get embedding vector length which will be constant across all keys
+                EMB_VEC_LEN = vector.shape[0]
 
         file.close()
 
