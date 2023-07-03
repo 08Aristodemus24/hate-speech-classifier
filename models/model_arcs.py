@@ -1,6 +1,6 @@
 import tensorflow as tf
 from tensorflow.keras.regularizers import L2
-from tensorflow.keras.layers import Dense, Dropout, LSTM, Activation, Embedding
+from tensorflow.keras.layers import Dense, Dropout, LSTM, Bidirectional, Activation, Embedding
 from tensorflow.keras import Model, Input
 from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.losses import CategoricalCrossentropy as cce_loss
@@ -31,9 +31,9 @@ def load_lstm_model(input_shape, vocab_len, emb_matrix):
 
     seqs_padded = Input(shape=(input_shape, ), dtype='int64')
     embeddings = init_embedding_layer(vocab_len, emb_matrix)(seqs_padded)
-    A1 = LSTM(units=32, return_sequences=True)(embeddings)
+    A1 = Bidirectional(LSTM(units=16, return_sequences=True))(embeddings)
     D1 = Dropout(0.5)(A1)
-    A2 = LSTM(units=32, return_sequences=False)(D1)
+    A2 = Bidirectional(LSTM(units=16, return_sequences=False))(D1)
     D2 = Dropout(0.5)(A2)
     Z3 = Dense(units=4)(D2)
     A3 = Activation('softmax')(Z3)

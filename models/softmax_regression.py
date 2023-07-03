@@ -45,7 +45,7 @@ class SoftmaxRegression:
 
         # initializer parameters e.g. because X is (nf x m) and Y is
         # (nc x m) theta is (nc x nf) and beta is (nc x 1)
-        THETA = tf.Variable(tf.random.normal(shape=(self.num_clasess, self.num_features), dtype=tf.float64))
+        THETA = tf.Variable(tf.random.normal(shape=(self.num_classes, self.num_features), dtype=tf.float64))
         BETA = tf.Variable(tf.zeros(shape=(self.num_classes, 1)), dtype=tf.float64)
 
         # initialize optimizer
