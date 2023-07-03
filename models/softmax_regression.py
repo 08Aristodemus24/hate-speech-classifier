@@ -93,7 +93,7 @@ class SoftmaxRegression:
 
             # apply gradients to
             optimizer.apply_gradients(zip(grads, [THETA, BETA]))
-            if (epoch % self.rec_ep_at) == 0:
+            if ((epoch % self.rec_ep_at) == 0) or (epoch == self.epochs - 1):
                 print(f'training cost at epoch {epoch}: {train_cost} \t validation cost at epoch {epoch}: {val_cost}\n')
 
                 if show_vars == True:
