@@ -1,6 +1,13 @@
 import tensorflow as tf
 from tensorflow import GradientTape
+from tensorflow.keras.optimizers import Adam
 import numpy as np
+
+from sklearn.metrics import accuracy_score
+from sklearn.metrics import precision_score
+from sklearn.metrics import recall_score
+from sklearn.metrics import f1_score
+from sklearn.metrics import confusion_matrix
 
 class SoftmaxRegression:
     def __init__(self, 
@@ -9,101 +16,95 @@ class SoftmaxRegression:
                  epochs=5000,
                  rec_ep_at=500,
                  learning_rate=0.01,  
-                 initializer='xavier', 
-                 regularization='L1',
+                 regularization='L2',
                  _lambda=0.1) -> None:
         self.X = X
-        self.Y = X
-
-        # initializer parameters e.g. because X is (nf x m) and Y is
-        # (nc x m) theta is (nc x nf) and beta is (nc x 1)
-        self.THETA = tf.Variable(tf.random.normal(shape=(Y.shape[0], X.shape[0]), dtype=tf.float64))
-        self.BETA = tf.Variable(tf.random.normal(shape=(Y.shape[0], 1)), dtype=tf.float64)
-
+        self.Y = Y
         self.epochs = epochs
-        self.initializer = initializer
 
         # X will be (num_features x num_instances)
         self.num_features = X.shape[0]
         self.num_instances = X.shape[1]
 
         # Y will be (num_classes x num_instances)
-        self.num_outputs = Y.shape[0]
+        self.num_classes = Y.shape[0]
         self.learning_rate = learning_rate
         self.cost_per_iter = []
 
-
-    def softmax(self, Z):
-        """Compute softmax values for each sets of scores in x."""
-        # e_z = np.exp(z)
-        # a = e_z / np.sum(e_z)
-
-        e_Z = np.exp(Z - np.max(Z))
-        return e_Z / e_Z.sum()
-    
+        self._THETA = np.nan
+        self._BETA = np.nan
             
+
     def linear(self, X, W, B):
         return tf.linalg.matmul(W, X) + B 
     
 
     def train(self):
+        X = tf.constant(self.X)
+        Y = tf.constant(self.Y)
+
+        # initializer parameters e.g. because X is (nf x m) and Y is
+        # (nc x m) theta is (nc x nf) and beta is (nc x 1)
+        THETA = tf.Variable(tf.random.normal(shape=(self.num_clasess, self.num_features), dtype=tf.float64))
+        BETA = tf.Variable(tf.random.normal(shape=(self.num_classes, 1)), dtype=tf.float64)
+
+        # initialize optimizer
+        optimizer = Adam(learning_rate=self.learning_rate)
+
+        # run training
         for epoch in range(self.epochs):
             with GradientTape() as tape:
-                Z = np.dot(self.THETA, )
+                # calculate logits or the linear activation of the weights and input
+                Z = self.linear(X, THETA, BETA)
+                
+                # calculate the softmax as well as the cross entropy for each logit
+                # by passing the logits Z and the real Y output labels
+                cost = self.J_cross_entropy(Z, Y)
 
+                # pass A to cross entropy function
+                
+            # derivative of cost with respect to THETA and BETA
+            grads = tape.gradient(cost, [THETA, BETA])
 
-    def J(self, A, Y):
-        loss = np.dot(-1 * Y, np.log(A))
-        cost = 0
-        return cost
+            # apply gradients to
+            optimizer.apply_gradients(zip(grads, [THETA, BETA]))
 
-def sentence_to_avg(sentence, word_to_vec_map):
-    """
-    Converts a sentence (string) into a list of words (strings). Extracts the GloVe representation of each word
-    and averages its value into a single vector encoding the meaning of the sentence.
-    
-    Arguments:
-    sentence -- string, one training example from X
-    word_to_vec_map -- dictionary mapping every word in a vocabulary into its 50-dimensional vector representation
-    
-    Returns:
-    avg -- average vector encoding information about the sentence, numpy-array of shape (J,), where J can be any number
-    """
-    # Get a valid word contained in the word_to_vec_map. 
-    # first word here is 'the'
-    any_word = list(word_to_vec_map.keys())[0]
-    
-    ### START CODE HERE ###
-    # Step 1: Split sentence into list of lower case words (≈ 1 line)
-    words = sentence.lower().split(' ')
+            print(f'cost at epoch {epoch}: {cost}\n')
 
-    # Initialize the average word vector, should have the same shape as your word vectors.
-    # Use `np.zeros` and pass in the argument of any word's word 2 vec's shape
-    avg = np.zeros(word_to_vec_map[any_word].shape)
-    
-    # Initialize count to 0
-    count = 0
-    
-    # Step 2: average the word vectors. You can loop over the words in the list "words".
-    for word in words:
-        # Check that word exists in word_to_vec_map
-        if word in word_to_vec_map:
-            
-            # add the 50 dim vector representation fo the word w 
-            # to the avg variable that will contain our summed 
-            # vectors of a sentences words
-            avg += word_to_vec_map[word]
-            
-            # Increment count which represents how many words we have in our sentence
-            count +=1
-          
-    if count > 0:
-        # Get the average. But only if count > 0
-        avg = avg / count
-    
-    ### END CODE HERE ###
-    
-    return avg
+        # set new coefficients after training
+        self.THETA = THETA
+        self.BETA = BETA
 
+    @property
+    def THETA(self):
+        return self._THETA
+    
+    @property
+    def BETA(self):
+        return self._BETA
+    
+    @THETA.setter
+    def THETA(self, new_theta):
+        self._THETA = new_theta
 
+    @BETA.setter
+    def BETA(self, new_beta):
+        self._BETA = new_beta
 
+    def J_cross_entropy(self, Z, Y):
+        cross_entropy_loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(Z, Y))
+        return cross_entropy_loss
+    
+    def predict(self, X_test):
+        # retrieve newly trained theta and beta coefficients
+        THETA = self.THETA
+        BETA = self.BETA
+
+        # calculate logits or Z again but this time with the trained
+        # coefficients and bias-coefficients
+        logits = tf.linalg.matmul(BETA, X_test) + THETA
+        probabilities = tf.nn.softmax(logits)
+        predicted_labels = tf.argmax(probabilities, axis=1)
+        Y_pred = tf.one_hot(predicted_labels, depth=self.num_classes)
+
+        return Y_pred
