@@ -19,7 +19,7 @@ class SoftmaxRegression:
                  rec_ep_at=500,
                  learning_rate=0.03,  
                  regularization='L2',
-                 _lambda=0.1,
+                 lambda_=0.1,
                  ) -> None:
         self.train_X = train_X
         self.train_Y = train_Y
@@ -37,7 +37,7 @@ class SoftmaxRegression:
         self.num_classes = train_Y.shape[1]
 
         self.learning_rate = learning_rate
-        self._lambda = _lambda
+        self.lambda_ = lambda_
         self.regularization = regularization
 
         self.cost_per_iter = []

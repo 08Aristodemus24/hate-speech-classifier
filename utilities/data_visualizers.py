@@ -18,7 +18,7 @@ def view_sentence(sentences, phase='', limit=5):
 
 
 
-def view_words(word_vec: dict, len_to_show=20, word_range=10):
+def view_words(word_vec: dict, title: str, len_to_show=20, word_range=10):
     """
     word_vec - key value pairs of the words and respective embeddings
 
@@ -39,8 +39,8 @@ def view_words(word_vec: dict, len_to_show=20, word_range=10):
     words = np.array(words)
     embeddings = np.array(embeddings)
 
-    for iter, (key, item) in enumerate(sliced_word_vec.items()):
-        print(f'{key}\n{item[:len_to_show]}')
+    # for iter, (key, item) in enumerate(sliced_word_vec.items()):
+    #     print(f'{key}\n{item[:len_to_show]}')
 
 
     # reduce length/dimensions of embeddings from 300 to 2
@@ -75,12 +75,13 @@ def view_words(word_vec: dict, len_to_show=20, word_range=10):
 
     axis.set_xlabel('x')
     axis.set_ylabel('y')
-    axis.set_title('t-SNE reduced word embeddings')
+    axis.set_title(title)
+    plt.savefig(f'./figures & images/{title}.png')
     plt.show()
 
 
 
-def view_word_frequency(word_counts, colormap:str, label: str, kind: str='barh', limit: int=6):
+def view_word_frequency(word_counts, colormap:str, title: str, kind: str='barh', limit: int=6):
     # get either last few words or first feww words
     data = word_counts[:limit].sort_values(ascending=True)
     cmap = cm.get_cmap(colormap)
@@ -93,11 +94,15 @@ def view_word_frequency(word_counts, colormap:str, label: str, kind: str='barh',
 
         axis.set_xlabel('frequency')
         axis.set_ylabel('words')
-        axis.set_title('word frequency graph')
+        axis.set_title(title)
+        plt.savefig(f'./figures & images/{title}.png')
+
         plt.show()
     elif kind == 'pie':
         axis.pie(data, labels=data.index, autopct='%.2f%%', colors=cmap(np.linspace(0, 1, len(data))))
         axis.axis('equal')
+        axis.set_title(title)
+        plt.savefig(f'./figures & images/{title}.png')
         plt.show()
     
 
