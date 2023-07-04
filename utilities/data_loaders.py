@@ -4,7 +4,7 @@ import csv
 from io import StringIO
 
 from utilities.data_preprocessors import my_clean, read_preprocess, series_to_1D_array
-
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 
 
 def load_data(path='', dataset='hate-offensive-speech'):
@@ -132,3 +132,39 @@ def view_and_load_data(data_path):
     print(f'frequency of all unique words: \n{all_unique_words_counts}\n')
 
     return df_1, all_words, all_unique_words, all_unique_words_counts
+
+
+
+def data_split_metric_values(Y_true, Y_pred, unique_labels):
+    """
+    Y_true - a vector of the real Y values of a data split e.g. the 
+    training set, validation set, test
+
+    Y_pred - a vector of the predicted Y values of an ML model given 
+    a data split e.g. a training set, validation set, test set
+
+    unique_labels - the uniqeu values of the target/real Y output
+    values. Note that it is not a good idea to pass the unique labels
+    of one data split since it may not contain all unique labels
+
+    given these arguments it creates a bar graph of all the relevant
+    metrics in evaluating an ML model e.g. accuracy, precision,
+    recall, and f1-score.
+    """
+    # accuracy: (tp + tn) / (p + n)
+    accuracy = accuracy_score(Y_true, Y_pred)
+    print('Accuracy: {:.2%}'.format(accuracy))
+
+    # precision tp / (tp + fp)
+    precision = precision_score(Y_true, Y_pred, labels=unique_labels, average='weighted')
+    print('Precision: {:.2%}'.format(precision))
+
+    # recall: tp / (tp + fn)
+    recall = recall_score(Y_true, Y_pred, labels=unique_labels,average='weighted')
+    print('Recall: {:.2%}'.format(recall))
+
+    # f1: 2 tp / (2 tp + fp + fn)
+    f1 = f1_score(Y_true, Y_pred, labels=unique_labels,average='weighted')
+    print('F1 score: {:.2%}'.format(f1))
+
+    return accuracy, precision, recall, f1

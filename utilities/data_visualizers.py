@@ -82,6 +82,13 @@ def view_words(word_vec: dict, title: str, len_to_show=20, word_range=10):
 
 
 def view_word_frequency(word_counts, colormap:str, title: str, kind: str='barh', limit: int=6):
+    """
+    plots either a horizontal bar graph to display frequency of words top 'limit' 
+    words e.g. top 20 or a pie chart to display the percentages of the top 'limit' 
+    words e.g. top 20, specified by the argument kind which can be either
+    strings barh or pie
+    """
+
     # get either last few words or first feww words
     data = word_counts[:limit].sort_values(ascending=True)
     cmap = cm.get_cmap(colormap)
@@ -108,6 +115,9 @@ def view_word_frequency(word_counts, colormap:str, title: str, kind: str='barh',
 
     
 def train_cross_results_v2(results: dict, epochs: list, img_title: str='figure'):
+    """
+    plots the number of epochs against the cost given cost values across these epochs
+    """
     # # use matplotlib backend
     # mpl.use('Agg')
 
@@ -139,6 +149,36 @@ def multi_class_heatmap(conf_matrix, img_title: str, cmap: str='YlGnBu'):
 
     plt.savefig(f'./figures & images/{img_title}.png')
 
+
+
+def view_metric_values(Y_true, Y_pred):
+    """
+    given a each list of the training, validation, and testing set
+    groups accuracy, precision, recall, and f1-score, plot a bar
+    graph that separates these three groups metric values
+    """
+
+    # accuracy of training, validation, and test set
+    # precision of groups training, validation, and testing
+    # recall of groups training, validation, and testing
+
+    accuracy, precision, recall, f1-score of training group
+    X = ['training','validation','testing']
+
+    Ygirls = [10,20,20,40]
+    Zboys = [20,30,25,30]
+    
+    X_axis = np.arange(len(X))
+    
+    plt.bar(X_axis - 0.2, Ygirls, 0.4, label = 'Girls')
+    plt.bar(X_axis + 0.2, Zboys, 0.4, label = 'Boys')
+    
+    plt.xticks(X_axis, X)
+    plt.xlabel("Groups")
+    plt.ylabel("Number of Students")
+    plt.title("Number of Students in each group")
+    plt.legend()
+    plt.show()
 
 
 
