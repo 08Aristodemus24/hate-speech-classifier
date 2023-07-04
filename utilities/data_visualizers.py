@@ -151,66 +151,33 @@ def multi_class_heatmap(conf_matrix, img_title: str, cmap: str='YlGnBu'):
 
 
 
-def view_metric_values(Y_true, Y_pred, img_title: str):
+def view_metric_values(df, img_title: str, cmap: str='icefire'):
     """
     given a each list of the training, validation, and testing set
     groups accuracy, precision, recall, and f1-score, plot a bar
     graph that separates these three groups metric values
     """
 
-    # accuracy of training, validation, and test set
-    # precision of groups training, validation, and testing
-    # recall of groups training, validation, and testing
-
     # create accuracy, precision, recall, f1-score of training group
     # create accuracy, precision, recall, f1-score of validation group
     # create accuracy, precision, recall, f1-score of testing group
-    X = ['training','validation','testing']
+    df_exp = df.melt(id_vars='data_split', var_name='metric', value_name='score')
+    values = df_exp['score']
 
-    Y_acc = []
-    Y_prec = []
-    Y_rec = []
-    Y_f1 = []
-
-    Ygirls = [10,20,20,40]
-    Zboys = [20,30,25,30]
+    # normalize the values to range [0, 1]
+    normalized = (values - min(values)) / (max(values) - min(values))
     
+    # convert to indices
+    indices = np.round(normalized * (len(values) - 1)).astype(np.int32)
 
-    # 10 left bar 20 right bar for group 1
-    # 20 left bar 30 right bar for group 2
-    # and so on
+    # use the indices to get the colors
+    palette = np.array(sb.color_palette(cmap, len(values))).take(indices, axis=0)
 
-    df = sns.load_dataset('tips')
-
-    df = df.groupby(['size’, ‘day']).agg(mean_tip=("tip", 'mean'))
-
-    df = df.reset_index()
-
-    sns.barplot(x="size",
-
-                y=mean_tip,
-
-                hue="day",
-
-                data=df)
-
-    plt.show()
-
-
-    X_axis = np.arange(len(X))
-    
-    _, axis = plt.subplots()
-
-    axis.bar(X_axis - 0.2, Ygirls, 0.4, label = 'Girls')
-    axis.bar(X_axis + 0.2, Zboys, 0.4, label = 'Boys')
-    
-    axis.set_xticks(X_axis, X)
-    axis.set_xlabel("Groups")
-    axis.set_ylabel("Number of Students")
-    axis.set_title("Number of Students in each group")
+    axis = sb.barplot(data=df_exp, x='data_split', y='score', hue='metric', palette=palette)
+    axis.set_title(img_title)
     axis.legend()
 
-    plt.savefig(f'./images & figures/{img_title}.png')
+    plt.savefig(f'./figures & images/{img_title}.png')
     plt.show()
 
 

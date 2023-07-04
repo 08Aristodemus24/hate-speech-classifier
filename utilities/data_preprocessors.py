@@ -478,3 +478,4 @@ def sentences_to_avgs(sentences, word_to_vec_dict: dict):
             avgs[index] = avgs[index] / count
     
     return avgs
+
