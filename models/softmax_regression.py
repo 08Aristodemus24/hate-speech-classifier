@@ -40,6 +40,15 @@ class SoftmaxRegression:
         self.lambda_ = lambda_
         self.regularization = regularization
 
+        self.history = {
+            'history': {
+                'train_loss': [],
+                'train_categorical_accuracy': [],
+                'val_loss': [],
+                'val_categorical_accuracy': []
+            },
+            'epoch': []
+        }
         self.cost_per_iter = []
 
         self._THETA = np.nan
@@ -87,14 +96,28 @@ class SoftmaxRegression:
                 # pass A to cross entropy function
                 train_cost = self.J_cross_entropy(train_A, train_Y) + self.regularizer(THETA)
                 val_cost = self.J_cross_entropy(val_A, val_Y)
-                
+
+                train_acc, _ = self.accuracy(train_A, train_Y)
+                val_acc, _ = self.accuracy(val_A, val_Y)
+
+
+
             # derivative of cost with respect to THETA and BETA
             grads = tape.gradient(train_cost, [THETA, BETA])
 
             # apply gradients to
             optimizer.apply_gradients(zip(grads, [THETA, BETA]))
+
+            # record all previous values after applying gradients
+            self.history['epoch'].append(epoch)
+            self.history['history']['train_loss'].append(train_cost)
+            self.history['history']['train_categorical_accuracy'].append(train_acc)
+            self.history['history']['val_loss'].append(val_cost)
+            self.history['history']['val_categorical_accuracy'].append(val_acc)
+
             if ((epoch % self.rec_ep_at) == 0) or (epoch == self.epochs - 1):
-                print(f'training cost at epoch {epoch}: {train_cost} \t validation cost at epoch {epoch}: {val_cost}\n')
+                
+                print(f"epoch {epoch} - train_loss: {train_cost} - train_categorical_accuracy: {'{:.2%}'.format(train_acc)} - val_loss: {val_cost} - val_categorical_accuracy: {'{:.2%}'.format(val_acc)}")
 
                 if show_vars == True:
                     self.view_vars(train_X, train_Y, THETA, BETA)
@@ -102,6 +125,8 @@ class SoftmaxRegression:
         # set new coefficients after training
         self.THETA = THETA
         self.BETA = BETA
+
+        return self.history
 
     @property
     def THETA(self):
@@ -129,6 +154,19 @@ class SoftmaxRegression:
 
         # return cost
         return cross_entropy_cost
+    
+    def accuracy(self, A, Y):
+        m = A.shape[0]
+        
+        # convert the predicted probability vector to 1's and 0's
+        # based on the element with the highest probability
+        A = tf.one_hot(tf.argmax(A, axis=1), depth=self.num_classes)
+
+        # calculate how many predictions were right
+        acc = np.sum((A.numpy() == Y.numpy()) / m)
+        results = 'Accuracy: {:.2%}'.format(acc)
+
+        return acc, results
     
     def regularizer(self, THETA):
         if self.regularization.upper() == "L2":
