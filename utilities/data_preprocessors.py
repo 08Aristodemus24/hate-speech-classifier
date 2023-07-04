@@ -387,6 +387,17 @@ def rejoin_data(df_2):
 
 
 
+def shuffle_data(df):
+    """
+    shuffles the rows of the dataframe so that in model training, model
+    sufficiently learns the features of different classes/labels
+    """
+    df = df.sample(frac=1).reset_index(drop=True)
+
+    return df
+
+
+
 def build_co_occ_matrix(oov_vocab, document):
     """
     Building the co-occurence matrix:
