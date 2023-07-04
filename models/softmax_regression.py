@@ -197,7 +197,7 @@ class SoftmaxRegression:
             # return l1 norm
             return l1_norm
     
-    def predict(self, X_test):
+    def predict(self, X_test, is_one_hot=False):
         # retrieve newly trained theta and beta coefficients
         THETA = self.THETA
         BETA = self.BETA
@@ -209,4 +209,4 @@ class SoftmaxRegression:
         A = tf.argmax(probabilities, axis=1)
         Y_pred = tf.one_hot(A, depth=self.num_classes)
 
-        return Y_pred
+        return A.numpy() if is_one_hot == False else Y_pred.numpy()

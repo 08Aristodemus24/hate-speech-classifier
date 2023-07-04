@@ -133,26 +133,12 @@ def train_cross_results_v2(results: dict, epochs: list, img_title: str='figure')
 
 
 
-def multi_class_heatmap():
-    fig_3, ax_3 = plt.subplots()
-    im = ax_3.imshow(cm, cmap='magma')
+def multi_class_heatmap(conf_matrix, img_title: str, cmap: str='YlGnBu'):
+    axis = sb.heatmap(conf_matrix, cmap=cmap, annot=True, fmt='g')
+    axis.set_title(img_title)
 
-    # Show all ticks and label them with the respective list entries
-    ax_3.set_xticks(np.arange(cm.shape[0]), labels=unique_labels(y))
-    ax_3.set_yticks(np.arange(cm.shape[1]), labels=unique_labels(y))
+    plt.savefig(f'./figures & images/{img_title}.png')
 
-    # Rotate the tick labels and set their alignment.
-    plt.setp(ax_3.get_xticklabels(), rotation=45, ha="right",
-            rotation_mode="anchor")
-
-    # Loop over data dimensions and create text annotations.
-    for i in range(cm.shape[0]):
-        for j in range(cm.shape[1]):
-            text = ax_3.text(j, i, cm[i, j], ha="center", va="center", color="#3274bf")
-
-    ax_3.set_title("correctly classified")
-    fig_3.tight_layout()
-    plt.show()
 
 
 
