@@ -108,16 +108,18 @@ class SoftmaxRegression:
             # apply gradients to
             optimizer.apply_gradients(zip(grads, [THETA, BETA]))
 
-            # record all previous values after applying gradients
-            self.history['epoch'].append(epoch)
-            self.history['history']['train_loss'].append(train_cost)
-            self.history['history']['train_categorical_accuracy'].append(train_acc)
-            self.history['history']['val_loss'].append(val_cost)
-            self.history['history']['val_categorical_accuracy'].append(val_acc)
+            
 
             if ((epoch % self.rec_ep_at) == 0) or (epoch == self.epochs - 1):
-                
+                # record all previous values after applying gradients
+                self.history['epoch'].append(epoch)
+                self.history['history']['train_loss'].append(train_cost)
+                self.history['history']['train_categorical_accuracy'].append(train_acc)
+                self.history['history']['val_loss'].append(val_cost)
+                self.history['history']['val_categorical_accuracy'].append(val_acc)
+
                 print(f"epoch {epoch} - train_loss: {train_cost} - train_categorical_accuracy: {'{:.2%}'.format(train_acc)} - val_loss: {val_cost} - val_categorical_accuracy: {'{:.2%}'.format(val_acc)}")
+
 
                 if show_vars == True:
                     self.view_vars(train_X, train_Y, THETA, BETA)
@@ -162,9 +164,13 @@ class SoftmaxRegression:
         # based on the element with the highest probability
         A = tf.one_hot(tf.argmax(A, axis=1), depth=self.num_classes)
 
+        predictions = np.all(A.numpy() == Y.numpy(), axis=1).astype('int64')
+        # print(predictions)
+
         # calculate how many predictions were right
-        acc = np.sum((A.numpy() == Y.numpy()) / m)
+        acc = np.sum(predictions) / m
         results = 'Accuracy: {:.2%}'.format(acc)
+        
 
         return acc, results
     

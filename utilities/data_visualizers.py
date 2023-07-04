@@ -107,7 +107,7 @@ def view_word_frequency(word_counts, colormap:str, title: str, kind: str='barh',
     
 
     
-def train_cross_results_v2(results: dict, epochs: int, img_title: str='figure'):
+def train_cross_results_v2(results: dict, epochs: list, img_title: str='figure'):
     # # use matplotlib backend
     # mpl.use('Agg')
 
@@ -117,7 +117,7 @@ def train_cross_results_v2(results: dict, epochs: int, img_title: str='figure'):
     styles = [('p:', '#5d42f5'), ('h-', '#fc03a5'), ('o:', '#1e8beb'), ('x--','#1eeb8f'), ('+--', '#0eb802'), ('8-', '#f55600')]
 
     for index, (key, value) in enumerate(results.items()):
-        axis.plot(np.arange(epochs + 1), value, styles[index][0] ,color=styles[index][1], alpha=0.5, label=key)
+        axis.plot(np.arange(len(epochs)), value, styles[index][0] ,color=styles[index][1], alpha=0.5, label=key)
 
     axis.set_ylabel('metric value')
     axis.set_xlabel('epochs')
