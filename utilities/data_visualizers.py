@@ -151,7 +151,7 @@ def multi_class_heatmap(conf_matrix, img_title: str, cmap: str='YlGnBu'):
 
 
 
-def view_metric_values(Y_true, Y_pred):
+def view_metric_values(Y_true, Y_pred, img_title: str):
     """
     given a each list of the training, validation, and testing set
     groups accuracy, precision, recall, and f1-score, plot a bar
@@ -162,22 +162,55 @@ def view_metric_values(Y_true, Y_pred):
     # precision of groups training, validation, and testing
     # recall of groups training, validation, and testing
 
-    accuracy, precision, recall, f1-score of training group
+    # create accuracy, precision, recall, f1-score of training group
+    # create accuracy, precision, recall, f1-score of validation group
+    # create accuracy, precision, recall, f1-score of testing group
     X = ['training','validation','testing']
+
+    Y_acc = []
+    Y_prec = []
+    Y_rec = []
+    Y_f1 = []
 
     Ygirls = [10,20,20,40]
     Zboys = [20,30,25,30]
     
+
+    # 10 left bar 20 right bar for group 1
+    # 20 left bar 30 right bar for group 2
+    # and so on
+
+    df = sns.load_dataset('tips')
+
+    df = df.groupby(['size’, ‘day']).agg(mean_tip=("tip", 'mean'))
+
+    df = df.reset_index()
+
+    sns.barplot(x="size",
+
+                y=mean_tip,
+
+                hue="day",
+
+                data=df)
+
+    plt.show()
+
+
     X_axis = np.arange(len(X))
     
-    plt.bar(X_axis - 0.2, Ygirls, 0.4, label = 'Girls')
-    plt.bar(X_axis + 0.2, Zboys, 0.4, label = 'Boys')
+    _, axis = plt.subplots()
+
+    axis.bar(X_axis - 0.2, Ygirls, 0.4, label = 'Girls')
+    axis.bar(X_axis + 0.2, Zboys, 0.4, label = 'Boys')
     
-    plt.xticks(X_axis, X)
-    plt.xlabel("Groups")
-    plt.ylabel("Number of Students")
-    plt.title("Number of Students in each group")
-    plt.legend()
+    axis.set_xticks(X_axis, X)
+    axis.set_xlabel("Groups")
+    axis.set_ylabel("Number of Students")
+    axis.set_title("Number of Students in each group")
+    axis.legend()
+
+    plt.savefig(f'./images & figures/{img_title}.png')
     plt.show()
 
 

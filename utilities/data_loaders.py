@@ -135,7 +135,7 @@ def view_and_load_data(data_path):
 
 
 
-def data_split_metric_values(Y_true, Y_pred, unique_labels):
+def data_split_metric_values(Y_true, Y_pred):
     """
     Y_true - a vector of the real Y values of a data split e.g. the 
     training set, validation set, test
@@ -143,7 +143,7 @@ def data_split_metric_values(Y_true, Y_pred, unique_labels):
     Y_pred - a vector of the predicted Y values of an ML model given 
     a data split e.g. a training set, validation set, test set
 
-    unique_labels - the uniqeu values of the target/real Y output
+    unique_labels - the unique values of the target/real Y output
     values. Note that it is not a good idea to pass the unique labels
     of one data split since it may not contain all unique labels
 
@@ -151,6 +151,9 @@ def data_split_metric_values(Y_true, Y_pred, unique_labels):
     metrics in evaluating an ML model e.g. accuracy, precision,
     recall, and f1-score.
     """
+
+    unique_labels = np.unique(Y_true)
+
     # accuracy: (tp + tn) / (p + n)
     accuracy = accuracy_score(Y_true, Y_pred)
     print('Accuracy: {:.2%}'.format(accuracy))
@@ -165,6 +168,6 @@ def data_split_metric_values(Y_true, Y_pred, unique_labels):
 
     # f1: 2 tp / (2 tp + fp + fn)
     f1 = f1_score(Y_true, Y_pred, labels=unique_labels,average='weighted')
-    print('F1 score: {:.2%}'.format(f1))
+    print('F1 score: {:.2%}\n'.format(f1))
 
     return accuracy, precision, recall, f1
