@@ -1,0 +1,10 @@
+Sayar Ul Hassan, Jameel Ahamed, Khaleel Ahmad,
+Analytics of machine learning-based algorithms for text classification,
+Sustainable Operations and Computers,
+Volume 3,
+2022,
+Pages 238-248,
+ISSN 2666-4127,
+https://doi.org/10.1016/j.susoc.2022.03.001.
+(https://www.sciencedirect.com/science/article/pii/S2666412722000101)
+Abstract: Text classification is the most vital area in natural language processing in which text data is automatically sorted into a predefined set of classes. The application of text classification is wide in commercial works like spam filtering, decision making, extracting information from raw data, and many other applications. Text classification is more significant for many enterprises since it eliminates the need for manual data classification, a more expensive and time-consuming mechanism. In this paper, a comparative analysis of text classification is done in which the efficiency of different machine learning algorithms on different datasets is analyzed and compared. Support Vector Machine (SVM), k-Nearest Neighbor (k-NN), Logistic Regression (LR), Multinomial Naïve Bayes (MNB), and Random Forest (RF) are Machine Learning based algorithms used in this work. Two different datasets are used to make a comparative analysis of these algorithms. This paper further analyzes the machine learning techniques employed for text classification on the basis of performance metrics viz accuracy, precision, recall and f1- score. The resullltsss reveals that Logistic Regression and Support Vector Machine outperforms the other models in the IMDB dataset, and kNN outperforms the other models for the SPAM dataset as per the results obtained from the proposed system.
