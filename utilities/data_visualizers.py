@@ -151,31 +151,64 @@ def multi_class_heatmap(conf_matrix, img_title: str, cmap: str='YlGnBu'):
 
 
 
-def view_metric_values(df, img_title: str, cmap: str='icefire'):
+def view_metric_values(df, img_title: str):
     """
     given a each list of the training, validation, and testing set
     groups accuracy, precision, recall, and f1-score, plot a bar
     graph that separates these three groups metric values
     """
+    fig = plt.figure(figsize=(15, 10))
+    axis = fig.add_subplot()
+
+    # Create an array with the colors you want to use
+    colors = ['#2ac5b9', '#1ca3b6', '#0a557a', '#01363e',]
+    sb.set_palette(sb.color_palette(colors))
 
     # create accuracy, precision, recall, f1-score of training group
     # create accuracy, precision, recall, f1-score of validation group
     # create accuracy, precision, recall, f1-score of testing group
     df_exp = df.melt(id_vars='data_split', var_name='metric', value_name='score')
-    values = df_exp['score']
-
-    # normalize the values to range [0, 1]
-    normalized = (values - min(values)) / (max(values) - min(values))
     
-    # convert to indices
-    indices = np.round(normalized * (len(values) - 1)).astype(np.int32)
+    axis = sb.barplot(data=df_exp, x='data_split', y='score', hue='metric', ax=axis)
+    axis.set_title(img_title)
+    axis.set_yscale('log')
+    axis.legend()
 
-    # use the indices to get the colors
-    palette = np.array(sb.color_palette(cmap, len(values))).take(indices, axis=0)
+    plt.savefig(f'./figures & images/{img_title}.png')
+    plt.show()
 
-    axis = sb.barplot(data=df_exp, x='data_split', y='score', hue='metric', palette=palette)
+
+
+def view_classified_labels(df, img_title: str):
+    """
+    given a each list of the training, validation, and testing set
+    groups accuracy, precision, recall, and f1-score, plot a bar
+    graph that separates these three groups metric values
+    """
+    fig = plt.figure(figsize=(15, 10))
+    axis = fig.add_subplot()
+
+    # Create an array with the colors you want to use
+    colors = ['#db7f8e', '#b27392']
+    sb.set_palette(sb.color_palette(colors))
+
+    # create accuracy, precision, recall, f1-score of training group
+    # create accuracy, precision, recall, f1-score of validation group
+    # create accuracy, precision, recall, f1-score of testing group
+    df_exp = df.melt(id_vars='data_split', var_name='status', value_name='score')
+    
+    axis = sb.barplot(data=df_exp, x='data_split', y='score', hue='status', ax=axis)
     axis.set_title(img_title)
     axis.legend()
+
+    plt.savefig(f'./figures & images/{img_title}.png')
+    plt.show()
+
+
+
+def view_label_freq(label_freq, img_title: str):
+    axis = sb.barplot(x=["DER", "NDG", "OFF", "HOM"], y=label_freq.values, palette="flare")
+    axis.set_title(img_title)
 
     plt.savefig(f'./figures & images/{img_title}.png')
     plt.show()
