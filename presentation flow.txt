@@ -1,0 +1,54 @@
+introduction to the problem of hate speech
+hate speech online and where they fester
+open source data on online hate speech
+desc of data, sources where the data was pulled from
+
+combined, handpicked, and curated these datasets to forming a much larger corpus of words and sentences
+what is homonymous? A homonynm or homonymous word/phrase/sentence is...
+what is derogatory? A derogatory word/phrase/sentence is...
+
+purpose:
+once engineering the dataset was done we wanted to was to ask the following questions
+1. what words are most frequently attributed in derogatory comments?
+2. what are the percentages of thsee frequent derogatory comments?
+3. what words are most frequently attributed in offensive comments?
+4. what are the percentages of thsee frequent offensive comments?
+5. what words are most frequently attributed in non-derogatory comments?
+6. what are the percentages of thsee frequent non-derogatory comments?
+7. how to best automate the detection of even regulate these inflammatory comments?
+
+we propose a two classifiers of these comments
+
+the other using a deep learning approach and the other a simple generalized version of logistic regression called softmax regression
+for multi class classification
+
+because machine leraning models work on numbers the next problem 
+was how would we feed words to a model such that it was able to 
+detect sentences or phrases that were known to either be derogatory, 
+non-derogatory, offensive, or homonymous
+
+*present word embeddings
+
+these are a way to represent words numerically in a d-dimensional vector space
+
+*write on whiteboard if needed
+
+*words in similar context tend to be close to one another
+
+*various models have been used to train embeddings of numerous words such as Word2Vec, GloVe, etc.
+
+*libraries like Gensim can be used to train embeddings from scratch, 
+
+*but sparsity in data can occur, and training embeddings can be difficult with sparse data or few words in order to train a word embedding model. Give citation to this fact
+
+*fortunately open source and publicly pre-trained embeddings can be of great use to an individual looking to use the vector representation of the words they have in their vocabulary or corpus
+
+*with the use of these word embeddings particularly GloVe the 
+one we propose to use in this problem we can represent the 
+words in our corpus in a vector space such that it is useful 
+later on in the two models we
+
+
+
+T-distributed Stochastic Neighbor Embedding
+T-SNE is a machine learning algorithm for data visualization, which is based on a nonlinear dimensionality reduction technique. The basic idea of t-SNE is to reduce dimensional space keeping relative pairwise distance between points. In other words, the algorithm maps multi-dimensional data to two or more dimensions, where points which were initially far from each other are also located far away, and close points are also converted to close ones. It can be said that t-SNE looking for a new data representation where the neighbourhood relations are preserved.
