@@ -1,5 +1,14 @@
-# **STILL IN PRODUCTION** 
-updated read me in new drive
+# **Production Done Awaiting Deployment** 
+
+
+
+## Note on the data:
+the data and word embeddings were ignored during commits due to immense file size. A workaround to include the dataset is to download it through this gdrive link here. Note please request access to gdrive user first before being able to access the data for download.
+
+gdrive link: https://drive.google.com/drive/folders/16Zhy1H4xTkoPBQAl_ZNfMpY8hAOLk9ba?usp=sharing
+
+
+
 ## references and citations:
 * **http://vectors.nlpl.eu/repository/**
 a repository of pre-trained word embeddings
@@ -9,7 +18,7 @@ but this the pre-trained word embeddings still may not contain some words in you
 
 * **https://czarrar.github.io/Gensim-Word2Vec/**
 * **https://towardsdatascience.com/fine-tune-glove-embeddings-using-mittens-89b5f3fe4c39**
-- returns the dictionary of all the words as keys and its respective vector representations as values
+returns the dictionary of all the words as keys and its respective vector representations as values
 
 * **https://stackoverflow.com/questions/40345607/how-does-fine-tuning-word-embeddings-work**
 * **https://czarrar.github.io/Gensim-Word2Vec/**
@@ -20,37 +29,9 @@ this is for fine tuning word embeddigns in a simple way using gensim, mittens us
 * **https://medium.com/@ncaldwellgatsos/should-you-try-and-train-domain-specific-embeddings-3ef29cd7bb3a**
 this is for training a new word embedding matrix for new words
 
-* **https://github.com/jing-qian/A-Benchmark-Dataset-for-Learning-to-Intervene-in-Online-Hate-Speech/blob/master/README.md**
-# A Benchmark Dataset for Learning to Intervene in Online Hate Speech
-
-In order to encourage strategies of countering online hate speech, we introduce a novel task of generative hate speech intervention along with two fully-labeled datasets collected from Gab and Reddit. Distinct from existing hate speech datasets, our datasets retain their conversational context and introduce human-written intervention responses. Due to our data collecting strategy, all the posts in our datasets are manually labeled as hate or non-hate speech by Mechanical Turk workers, so they can also be used for the hate speech detection task.
-
-There are two CSV files under the data directory: gab.csv and reddit.csv, These datasets provide conversation segments, hate speech labels, as well as intervention responses written by  Mechanical Turk workers.
-
-Two data files have the same data structure:
-
-|Field|Description|
-|-------|-------------|
-|id|the ids of the post in a conversation segment|
-|text|the text of the posts in a conversation segment|
-|hate_speech_idx|a list of the indexes of the hateful posts in this conversation|
-|response|a list of human-written responses|
-
-Please refer to the paper "A Benchmark Dataset for Learning to Intervene in Online Hate Speech" (EMNLP 2019) for the detailed information about the dataset.
-
-# Data Processing
-Other meta data of the Reddit post can be retrieved using Reddit API and the ids of the posts. 
-
-Other meta data of the Gab post can be retrieved from the dataset https://files.pushshift.io/gab/GABPOSTS_2018-10.xz using the ids of the posts.
-
-# License
-The dataset is licensed under the Creative Commons Attribution-NonCommercial 4.0 International Public License. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc/4.0/ or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA. 
 
 
 * **https://github.com/08Aristodemus24/Ethos-Hate-Speech-Dataset.git**
-
-
-
 # ETHOS Hate Speech Dataset
 ETHOS: multi-labEl haTe speecH detectiOn dataSet. This repository contains a dataset for hate speech detection on social media platforms, called Ethos. There are two variations of the dataset:
 - Ethos_Dataset_Binary.csv[Ethos_Dataset_Binary.csv] contains 998 comments in the dataset alongside with a label about hate speech *presence* or *absence*. 565 of them do not contain hate speech, while the rest of them, 433, contain. 
@@ -87,10 +68,9 @@ Stamatis Karlos | stkarlos@csd.auth.gr
 ## License
 [GNU GPLv3](https://choosealicense.com/licenses/gpl-3.0/)
 
+
+
 * **https://github.com/08Aristodemus24/slur-corpus.git**
-
-
-
 # Towards a Comprehensive Taxonomy and Large-Scale Annotated Corpus for Online Slur Usage
 
 Corpus repository for Kurrek, J., Saleem, H. M., & Ruths, D. (2020, November). Towards a Comprehensive Taxonomy and Large-Scale Annotated Corpus for Online Slur Usage. In Proceedings of the Fourth Workshop on Online Abuse and Harms (pp. 138-149). You can read it [here](https://www.aclweb.org/anthology/2020.alw-1.17.pdf).
@@ -145,10 +125,8 @@ Please cite our paper in any published work that uses this corpus.
 }
 ```
 
+
 * **https://github.com/08Aristodemus24/hate-speech-and-offensive-language.git**
-
-
-
 ### Automated Hate Speech Detection and the Problem of Offensive Language
 Repository for Thomas Davidson, Dana Warmsley, Michael Macy, and Ingmar Weber. 2017. "Automated Hate Speech Detection and the Problem of Offensive Language." ICWSM. You read the paper [here](https://aaai.org/ocs/index.php/ICWSM/ICWSM17/paper/view/15665).
 
@@ -200,11 +178,6 @@ If you have any questions please contact `thomas dot davidson at rutgers  dot ed
 - only use ff functions
 
 - project uses the hate-speech-and-offensive-language dataset as external dataset
-
-
-**Breadcrumbs-A-Benchmark-Dataset-for-Learning-to-Intervene-in-Online-Hate-Speech:**
-- text feature contains the hate speech comment
-- there is no label for the comment of whether it is hate speech or not, because all rows are designated as hate speech
 
 **slur-corpus:**
 - gold label is the label of whether the comment is hate speech or noy
@@ -267,7 +240,5 @@ Here we investigate the problem of hate speech and ask the following questions w
 
 **sentiment classifier model**
 - implement a counter to count how many words in our hate-speech-dataset does not exist in our pre-trained glove word embeddings (from stanford)
-
-
 
 

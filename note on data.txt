@@ -1,0 +1,4 @@
+## Note on the data:
+the data and word embeddings were ignored during commits due to immense file size. A workaround to include the dataset is to download it through this gdrive link here. Note please request access to gdrive user first before being able to access the data for download.
+
+gdrive link: https://drive.google.com/drive/folders/16Zhy1H4xTkoPBQAl_ZNfMpY8hAOLk9ba?usp=sharing
