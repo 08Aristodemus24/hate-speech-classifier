@@ -18,7 +18,7 @@ def view_sentence(sentences, phase='', limit=5):
 
 
 
-def view_words(word_vec: dict, title: str, len_to_show=20, word_range=10):
+def view_words(word_vec: dict, word_range: int=10, title: str="word embeddings", save_img: bool=True):
     """
     word_vec - key value pairs of the words and respective embeddings
 
@@ -39,16 +39,11 @@ def view_words(word_vec: dict, title: str, len_to_show=20, word_range=10):
     words = np.array(words)
     embeddings = np.array(embeddings)
 
-    # for iter, (key, item) in enumerate(sliced_word_vec.items()):
-    #     print(f'{key}\n{item[:len_to_show]}')
-
-
     # reduce length/dimensions of embeddings from 300 to 2
     tsne_model = TSNE(perplexity=50, n_components=2, init='pca', n_iter=5000, random_state=0)
 
     # because there are 21624 words dimensionality of emb_red will go from 21624 x 300 to 21624 x 2
     emb_red = tsne_model.fit_transform(embeddings)
-
 
     # populate a new dictionary with new reduced embeddings with 2 dimensions
     word_vec_red = {}
@@ -76,12 +71,14 @@ def view_words(word_vec: dict, title: str, len_to_show=20, word_range=10):
     axis.set_xlabel('x')
     axis.set_ylabel('y')
     axis.set_title(title)
-    plt.savefig(f'./figures & images/{title}.png')
+    
+    if save_img:
+        plt.savefig(f'./figures & images/{title}.png')
     plt.show()
 
 
 
-def view_word_frequency(word_counts, colormap:str, title: str, kind: str='barh', limit: int=6):
+def view_word_frequency(word_counts, colormap: str="plasma", title: str="untitled", save_img: bool=True, kind: str='barh', limit: int=6):
     """
     plots either a horizontal bar graph to display frequency of words top 'limit' 
     words e.g. top 20 or a pie chart to display the percentages of the top 'limit' 
@@ -96,21 +93,18 @@ def view_word_frequency(word_counts, colormap:str, title: str, kind: str='barh',
     
     if kind == 'barh':        
         axis.barh(data.index, data.values, color=cmap(np.linspace(0, 1, len(data))))
-
-        # axis = word_counts[:limit].sort_values(ascending=True).plot(kind='barh', colormap='viridis')
-
         axis.set_xlabel('frequency')
         axis.set_ylabel('words')
         axis.set_title(title)
-        plt.savefig(f'./figures & images/{title}.png')
-
-        plt.show()
+        
     elif kind == 'pie':
         axis.pie(data, labels=data.index, autopct='%.2f%%', colors=cmap(np.linspace(0, 1, len(data))))
         axis.axis('equal')
         axis.set_title(title)
+    
+    if save_img:
         plt.savefig(f'./figures & images/{title}.png')
-        plt.show()
+    plt.show()
     
 
     

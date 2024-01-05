@@ -280,6 +280,7 @@ def read_preprocess(df):
 
     # saving df to csv does not preserve a series type and is 
     # converted to str so convert first str to list or series
+    # "["a", "b", "hello"]" to ["a", "b", "hello"]
     df['comment'] = df['comment'].apply(lambda comment: ast.literal_eval(comment))
 
     return df
